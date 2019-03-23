@@ -1,0 +1,69 @@
+---
+title: "When Data Science Meets Philosphy"
+output: html_document
+---
+
+
+```{r}
+library(data.table)
+library(ggplot2)
+library(stringr)
+library(tm)
+library(qdap)
+library(gutenbergr)
+library(trelliscopejs)
+```
+
+```{r}
+selected_books_path <- "/home/allan/Documentos/gutenberg_vis/selected_books"
+```
+
+```{r}
+gutenberg_base <- data.table(gutenberg_works())
+raw_text <- readRDS(file.path(selected_books_path, "philosophy.RDS"))
+```
+
+#####Preprocessing
+We going to lowercase all charactes, remove special characters. Further we'll lemmatize all the strings
+
+
+
+```{r}
+philosophy_books <- rbindlist(raw_text)
+philosophy_books[, iconv(text, to="ASCII//TRANSLIT"), text]
+philosophy_books[, text := gsub("[^\x20-\x7E]", "", text), text]
+philosophy_books[, text := tolower(text)]
+philosophy_books[, text := removePunctuation(text)]
+philosophy_books[, text := replace_contraction(text)]
+```
+
+```{r}
+saveRDS(philosophy_books, file.path(selected_books_path, "philosophy_preprocessed.RDS"))
+```
+
+####Collapse by word and investigate the zipf law
+```{r}
+philosophy_words <- philosophy_books[, .(word = (str_split(text, " "))[[1]]), .(gutenberg_id,text)][, .(gutenberg_id, word)]
+philosophy_words <- philosophy_words[word != ""]
+philosophy_words <- philosophy_words[, .N, .(gutenberg_id,word)]
+philosophy_words[, index := 1:.N, .(gutenberg_id)]
+```
+
+
+```{r}
+philosophy_words[, log_N := log(N)]
+philosophy_words[, log_index := log(index)]
+philosophy_words[, zipf := predict(lm(log_N ~ log_index)), gutenberg_id]
+
+```
+
+
+```{r}
+ggplot(philosophy_words) + 
+  geom_point(aes(x = log_index, y = log_N))  + 
+  geom_line(aes(x = log_index, y = zipf)) + 
+  facet_trelliscope( ~ gutenberg_id)
+
+```
+
+

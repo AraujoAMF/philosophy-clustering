@@ -1,0 +1,10 @@
+---
+title: "Philosphy Clustering"
+output: html_document
+---
+
+##Introduction
+
+Imagine that you have a Philosophy homework that consist in read more than a hundred books, and group then according with the affinitis of each book. Despite of be a reall hard homework, there are several methods to do that such as author. We put all Plato's books in a group, all Aristotle books in a group so on, but this aproache don't give a lot of relevant information. Another choice is according with theme such as ethics, metaphysics, aesthetics, there's a mot more of value in this aproache, but there are books that deal with several topics. Another one is group according the importance of the words in the book, and we'll cover this aproache in this post.
+
+
