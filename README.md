@@ -1,9 +1,9 @@
 
-#Philosophy books clustering
+# Philosophy books clustering
 
 The main goal of this project is analyse similarities between philosophy authors using  text mining, dimensionality reduction and clustering techniques in order to explore relations aming the books.
 
-#Running
+# Running
 
 In order to reproduce this work you only need to change the paths to your local machine and run in this order:
 
@@ -17,6 +17,6 @@ In order to reproduce this work you only need to change the paths to your local 
 
 All analysis and plots are produced with this scripts, and the final report, avaliable in https://rpubs.com/araujoamf/philosophy-tsne-clustering is the report.Rmd. I wish that you enjoy this analysis!
 
-#License
+# License
 
 This project is licensed under the MIT License 
