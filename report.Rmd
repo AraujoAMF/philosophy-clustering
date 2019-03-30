@@ -1,10 +1,69 @@
 ---
-title: "Philosphy Clustering"
+title: "Philosophy Books Clustering"
 output: html_document
 ---
 
 ##Introduction
 
-Imagine that you have a Philosophy homework that consist in read more than a hundred books, and group then according with the affinitis of each book. Despite of be a reall hard homework, there are several methods to do that such as author. We put all Plato's books in a group, all Aristotle books in a group so on, but this aproache don't give a lot of relevant information. Another choice is according with theme such as ethics, metaphysics, aesthetics, there's a mot more of value in this aproache, but there are books that deal with several topics. Another one is group according the importance of the words in the book, and we'll cover this aproache in this post.
+Imagine that you have a Philosophy homework that consist in read more than a hundred books, and group then according with the affinities of each book. Despite of be a real hard homework, there are several methods to do that such as author. We put all Plato's books in a group, all Aristotle books in a group so on, but this aproache don't give a lot of relevant information. Another choice is according with theme such as ethics, metaphysics, aesthetics, there's a much more of value in this aproache, but there are books that deal with several topics. Another one is group according the importance of the words in the book, and this aproache will be covered in this post.
+
+##Methodology
+
+```{r, echo=FALSE, results = 'hide', include=FALSE}
+library(data.table)
+library(ggplot2)
+library(plotly)
+library(knitr)
+library(xtable)
+library(plotly)
+library(pander)
+preprocessed_data_path <- "/home/allan/Documentos/gutenberg_vis/selected_books"
+
+```
+
+Was selected 22 philosophy authors which work is avaliable in the Gutenberg project. Namely: Aristotle, Augustine, Berkeley, Descartes, Hegel, Hobbes, Hume, Kant, Leibniz, Locke, Machiavelli, Marcus Aurelius, Marx, Mill, Nietzsche, Pascal, Plato, Rousseau, Russell, Schopenhauer, Spinoza and Thomas. and all books avaliable in the package gutenberg was downloaded. Resulting in 177 books, here is a sample:
+
+```{r, echo=FALSE}
+preprocessed_data_path <- "/home/allan/Documentos/gutenberg_vis/selected_books"
+
+books_names <- readRDS(file.path(preprocessed_data_path, "books_names.RDS"))
+books_author <-  readRDS(file.path(preprocessed_data_path, "books_author.RDS"))
+books <- data.table(Author = books_author, Title = books_names)
+setorder(books, Author, Title )
+kable(books[c(10L, 153L, 161L, 87L, 102L, 66L, 50L, 64L, 100L, 5L)], format = "pandoc")
+```
+
+
+After that download this data, we need to preprocess to avoid a misleading in our analysis, in this step was done:
+
+.Stop words removal
+
+.Special character removal
+
+.Word lowering
+
+.Contraction replacement
+
+.Punctuation removal
+
+.String lemmatization
+
+And then this data was transformed in a Corpus, the in a weigthed by term frequency matrix. This matrix have a hundreds of columns, so was applied a dimension reduction technique. 
+First was applied a principal component analysis in order to capture at least 80% variance and this number is reached with 82 components. Then was applied a tSNE algorithm, was estimated that the number of steps that minimize the K-L divergence is 1250. So was tried perplexity between 1 up to 58 and the perplexity that make the cluster more visible is 2.
+
+In the final step of this analysis the was used a k-means clustering in the tSNE two dimensional space, and the number of clusters was determined in 12 using the elbow method.
+
+If you want to get more details of the study or reproduce by yourself check it out in the github repository    (https://github.com/AraujoAMF/philosophy-clustering) 
+
+##Result
+
+After applied all these techiques the final result is this plot grouping each book in the tSNE space. And you can explore by yourself the relationships between the books. Each color is a cluster. So the same color mean same cluster. And you can see the author of the book written, and if you click in a point there is the book title. And explore the similarities of these books
+
+```{r, echo=FALSE}
+g <-  readRDS(file.path(preprocessed_data_path, "g_final.RDS"))
+ggplotly(g, width = 600*((1+sqrt(5))/2),height = 600)
+```
+
+
 
 
