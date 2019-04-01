@@ -50,14 +50,14 @@ After that download this data, we need to preprocess to avoid a misleading in ou
 And then this data was transformed in a Corpus, the in a weigthed by term frequency matrix. This matrix have a hundreds of columns, so was applied a dimension reduction technique. 
 First was applied a principal component analysis in order to capture at least 80% variance and this number is reached with 82 components. Then was applied a tSNE algorithm, was estimated that the number of steps that minimize the K-L divergence is 1250. 
 
-![Itercosts](/home/allan/Documentos/gutenberg_vis/images/itercosts.png)
+![Itercosts](https://raw.githubusercontent.com/AraujoAMF/philosophy-clustering/master/itercosts.png)
 So was tried perplexity between 1 up to 58 and the perplexity that make the cluster more visible is 2.
 
-![Perplexity = 2](/home/allan/Documentos/gutenberg_vis/images/perplexity_2.png)
+![Perplexity = 2](https://raw.githubusercontent.com/AraujoAMF/philosophy-clustering/master/perplexity_2.png)
 
 In the final step of this analysis the was used a k-means clustering in the tSNE two dimensional space, and the number of clusters was determined in 12 using the elbow method.
 
-![Kmeans](/home/allan/Documentos/gutenberg_vis/images/kmeans_withness.png)
+![Kmeans](https://raw.githubusercontent.com/AraujoAMF/philosophy-clustering/master/kmeans_withness.png)
 
 If you want to get more details of the study or reproduce by yourself check it out in the github repository    (https://github.com/AraujoAMF/philosophy-clustering) 
 
