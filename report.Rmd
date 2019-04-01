@@ -1,6 +1,6 @@
 ---
 title: "Philosophy Books Clustering"
-output: html_document
+output: rmarkdown::github_document
 ---
 
 ##Introduction
