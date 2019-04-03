@@ -15,7 +15,7 @@ In order to reproduce this work you only need to change the paths to your local 
 
 04.tsne_exploration
 
-All analysis and plots are produced with this scripts, and the final report, avaliable in https://rpubs.com/araujoamf/philosophy-tsne-clustering is the report.Rmd.
+All analysis and plots are produced with these scripts, and the final report, avaliable in https://rpubs.com/araujoamf/philosophy-tsne-clustering is the report.Rmd.
 
 ![Clustered](philosophy_clustered.png)
 
